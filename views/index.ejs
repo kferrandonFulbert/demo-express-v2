@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Choisir votre navigateur</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <nav>
+    <ul>
+      <li><a href="/">Accueil</a></li>
+      <li><a href="/choix">Choix</a></li>
+      <li><a href="/apropos">À propos</a></li>
+    </ul>
+  </nav>
+  <h1>Choisir votre navigateur préféré</h1>
+  <form action="/choix" method="POST">
+    <label for="navigateur">Navigateur :</label>
+    <select name="navigateur" id="navigateur">
+      <!-- Les options seront ajoutées ici par JavaScript -->
+    </select>
+    <button type="submit">Soumettre</button>
+  </form>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      fetch('/navigateurs')
+        .then(response => response.json())
+        .then(navigateurs => {
+          const select = document.getElementById('navigateur');
+          navigateurs.forEach(navigateur => {
+            const option = document.createElement('option');
+            option.value = navigateur;
+            option.textContent = navigateur;
+            select.appendChild(option);
+          });
+        })
+        .catch(error => console.error('Erreur lors de la récupération des navigateurs:', error));
+    });
+  </script>
+</body>
+</html>
